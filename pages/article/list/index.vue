@@ -7,9 +7,7 @@
       :up="mescrollUp"
       @init="mescrollInit"
     >
-      <li v-for="item in dataList" :key="item.id">
-        {{ item.content }}
-      </li>
+      <BlogItem v-for="item in dataList" :key="item.id" :blog-item="item" />
       <!--内容...-->
     </mescroll-vue>
   </div>
@@ -18,12 +16,14 @@
 <script>
 // 引入mescroll的vue组件
 import MescrollVue from 'mescroll.js/mescroll.vue'
+import BlogItem from '@/components/BlogItem.vue'
 import { asyncReq } from '@/utils/index.js'
 
 export default {
   name: 'ArticleListPage',
   components: {
-    MescrollVue // 注册mescroll组件
+    MescrollVue, // 注册mescroll组件
+    BlogItem
   },
   data() {
     return {
