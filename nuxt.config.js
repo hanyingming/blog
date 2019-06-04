@@ -15,7 +15,10 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: '//cdn.bootcss.com/normalize/8.0.1/normalize.min.css' }
+      {
+        rel: 'stylesheet',
+        href: '//cdn.bootcss.com/normalize/8.0.1/normalize.min.css'
+      }
     ]
   },
 
@@ -32,7 +35,10 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/antd-ui'],
+  plugins: [
+    '@/plugins/antd-ui',
+    { src: '@/plugins/vue-mavon-editor', srr: false }
+  ],
 
   /*
    ** Nuxt.js modules
