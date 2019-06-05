@@ -12,6 +12,7 @@ async function start() {
   const nuxt = new Nuxt(config)
 
   const { host, port } = nuxt.options.server
+  console.warn('config.dev', config.dev)
 
   // Build only in dev mode
   if (config.dev) {
@@ -23,6 +24,8 @@ async function start() {
 
   // Give nuxt middleware to express
   app.use(nuxt.render)
+
+  console.warn('port', port)
 
   // Listen the server
   app.listen(port, host)

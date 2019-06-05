@@ -35,7 +35,7 @@ export default {
         // 以下是一些常用的配置,当然不写也可以的.
         page: {
           num: 0, // 当前页 默认0,回调之前会加1; 即callback(page)会从1开始
-          size: 2 // 每页数据条数,默认10
+          size: 10 // 每页数据条数,默认10
         },
         htmlNodata: '<p class="upwarp-nodata"> 已经到底了 </p>',
         noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于5才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看这就是为什么无更多数据有时候不显示的原因
@@ -51,8 +51,26 @@ export default {
           tip: '暂无相关数据~' // 提示
         }
       },
-      dataList: [] // 列表数据
+      dataList: []
     }
+  },
+  asyncData(context) {
+    console.warn(33333333)
+    // 联网请求
+    return asyncReq({
+      apiKey: 'loadPublishArticlePages',
+      params: {
+        page: 0,
+        pageSize: 2
+      }
+    }).then(({ props, preProp, prop }) => {
+      console.warn('preProp:', preProp)
+      console.warn('props,:', props)
+      console.warn('prop,:', prop)
+      return {
+        dataList: (prop && prop.list) || [] // 列表数据
+      }
+    })
   },
   beforeRouteEnter(to, from, next) {
     // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写

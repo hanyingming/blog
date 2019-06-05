@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { message } from 'ant-design-vue'
 import config from './config.js'
-import { storageKey } from './constants.js'
+// import { storageKey } from './constants.js'
 const { serverUrl } = config
 
 // 处理错误码
@@ -139,7 +139,7 @@ export function apiReq(options) {
   opts.url = mergeUrl
   opts.header = {
     ...opts.headers,
-    'x-auth-token': localStorage.getItem(storageKey.token) || '',
+    // 'x-auth-token': localStorage.getItem(storageKey.token) || '',
     p: '8'
   }
 
@@ -187,6 +187,8 @@ export function delay() {
 }
 
 // catch all the unhandled exception
-window.addEventListener(`unhandledrejection`, err => {
-  console.warn(err.reason.msg || `unhandledrejection`)
-})
+if (process.client) {
+  window.addEventListener(`unhandledrejection`, err => {
+    console.warn(err.reason.msg || `unhandledrejection`)
+  })
+}
