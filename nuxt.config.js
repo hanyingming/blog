@@ -19,6 +19,13 @@ module.exports = {
         rel: 'stylesheet',
         href: '//cdn.bootcss.com/normalize/8.0.1/normalize.min.css'
       }
+    ],
+    script: [
+      {
+        src:
+          'https://bce.bdstatic.com/lib/@baiducloud/sdk/1.0.0-rc.8/baidubce-sdk.bundle.min.js',
+        type: 'text/javascript'
+      }
     ]
   },
 

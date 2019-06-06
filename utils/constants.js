@@ -8,7 +8,8 @@ const storageKey = {
 
 const apiKey = {
   loadArticleList: 'loadArticleList',
-  loadPublishArticlePages: 'loadPublishArticlePages'
+  loadPublishArticlePages: 'loadPublishArticlePages',
+  getBdBosToken: 'getBdBosToken'
 }
 
 export { storageKey, apiKey }

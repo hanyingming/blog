@@ -1,6 +1,6 @@
 import { storageKey, apiKey } from './constants.js'
 import { apiReq, delay } from './request.js'
-import { checkIsStartWithLoad, asyncReq } from './utils.js'
+import { checkIsStartWithLoad, asyncReq, simpleUploadFile } from './utils.js'
 const config = require('./config.js')
 
 export {
@@ -10,5 +10,6 @@ export {
   apiReq,
   delay,
   checkIsStartWithLoad,
-  asyncReq
+  asyncReq,
+  simpleUploadFile
 }

@@ -3,7 +3,7 @@
  */
 import { apiKey } from '@/utils/index.js'
 
-const { loadArticleList, loadPublishArticlePages } = apiKey
+const { loadArticleList, loadPublishArticlePages, getBdBosToken } = apiKey
 
 console.warn('apiKey: ', apiKey)
 
@@ -19,6 +19,15 @@ export default {
   },
   [loadArticleList]: {
     url: 'blog/list',
+    handler: ({ props, prop, resData }) => {
+      console.warn('api, props:', props)
+      console.warn('prop:', prop)
+      console.warn('resData:', resData)
+      return resData
+    }
+  },
+  [getBdBosToken]: {
+    url: 'grant/getBdBosToken',
     handler: ({ props, prop, resData }) => {
       console.warn('api, props:', props)
       console.warn('prop:', prop)

@@ -1,12 +1,21 @@
 <template>
   <div class="mavonEditor">
     <no-ssr>
-      <mavon-editor :value="val" :toolbars="markdownOption" @change="$change" />
+      <mavon-editor
+        ref="md"
+        :value="val"
+        :toolbars="markdownOption"
+        @imgAdd="$imgAdd"
+        @change="$change"
+      />
     </no-ssr>
   </div>
 </template>
 
 <script>
+import { asyncReq, apiKey, simpleUploadFile } from '@/utils/index.js'
+const { getBdBosToken } = apiKey
+
 export default {
   props: {
     value: {
@@ -55,12 +64,35 @@ export default {
       }
     }
   },
+  mounted() {
+    console.warn('getBdBosToken:', getBdBosToken)
+    console.warn('asyncReq:', asyncReq)
+    // asyncReq({
+    //   apiKey: getBdBosToken
+    // }).then(({ props, preProp, prop }) => {
+    //   console.warn('preProp:', preProp)
+    //   console.warn('props,:', props)
+    //   console.warn('prop,:', prop)
+    // })
+  },
   methods: {
     $change(value, render) {
       console.warn('render:', render)
       this.$emit('change', {
         mdContent: value,
         htmlContent: render
+      })
+    },
+    $imgAdd(pos, $file) {
+      // 第一步.将图片上传到服务器.
+      simpleUploadFile({
+        $vm: this,
+        $file
+      }).then(res => {
+        if (res.code !== 300) {
+          // 更换图片地址
+          this.$refs.md.$img2Url(pos, res.fileUrl)
+        }
       })
     }
   }
