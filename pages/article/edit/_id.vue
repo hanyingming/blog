@@ -109,7 +109,7 @@ export default {
   width: auto;
 }
 .editorArea {
-  height: 60vh;
+  height: auto;
 }
 .input {
   max-width: 360px;

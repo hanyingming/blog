@@ -101,7 +101,11 @@ export default {
 <style scoped>
 .mavonEditor {
   width: 100%;
-  height: 100%;
+  height: 56vh;
   margin-bottom: 5px;
+}
+
+.mavonEditor .markdown-body {
+  height: 100%;
 }
 </style>
