@@ -1,4 +1,3 @@
-import store from '../store/index.js'
 import { apiKey } from './constants.js'
 
 const { getBdBosToken } = apiKey
@@ -20,8 +19,8 @@ const checkIsStartWithLoad = str => {
 }
 
 // 发起异步请求
-const asyncReq = payload => {
-  return store().dispatch({
+const asyncReq = ({ vm, payload }) => {
+  return vm.dispatch({
     type: 'asyncReqData',
     payload
   })

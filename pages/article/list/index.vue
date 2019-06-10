@@ -55,13 +55,16 @@ export default {
     }
   },
   asyncData(context) {
-    console.warn(33333333)
+    console.warn('context:', context.store)
     // 联网请求
     return asyncReq({
-      apiKey: 'loadPublishArticlePages',
-      params: {
-        page: 0,
-        pageSize: 2
+      vm: context.store,
+      payload: {
+        apiKey: 'loadPublishArticlePages',
+        params: {
+          page: 0,
+          pageSize: 2
+        }
       }
     }).then(({ props, preProp, prop }) => {
       console.warn('preProp:', preProp)
@@ -100,10 +103,13 @@ export default {
       const pageSize = page.size // 页长, 默认每页10条
       // 联网请求
       asyncReq({
-        apiKey: 'loadPublishArticlePages',
-        params: {
-          page: pageNum,
-          pageSize: pageSize
+        vm: this.$store,
+        payload: {
+          apiKey: 'loadPublishArticlePages',
+          params: {
+            page: pageNum,
+            pageSize: pageSize
+          }
         }
       }).then(({ props, preProp, prop }) => {
         console.warn('preProp:', preProp)
