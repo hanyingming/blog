@@ -24,7 +24,6 @@ export default {
     }
   },
   data() {
-    console.warn(this.value)
     return {
       val: (this.value && this.value.mdContent) || '',
       markdownOption: {
@@ -65,15 +64,18 @@ export default {
     }
   },
   mounted() {
-    console.warn('getBdBosToken:', getBdBosToken)
-    console.warn('asyncReq:', asyncReq)
-    // asyncReq({
-    //   apiKey: getBdBosToken
-    // }).then(({ props, preProp, prop }) => {
-    //   console.warn('preProp:', preProp)
-    //   console.warn('props,:', props)
-    //   console.warn('prop,:', prop)
-    // })
+    if (!this.$store.state[getBdBosToken].sessionToken) {
+      asyncReq({
+        vm: this.$store,
+        payload: {
+          apiKey: getBdBosToken
+        }
+      }).then(({ props, preProp, prop }) => {
+        console.warn('preProp:', preProp)
+        console.warn('props,:', props)
+        console.warn('prop,:', prop)
+      })
+    }
   },
   methods: {
     $change(value, render) {
@@ -86,7 +88,7 @@ export default {
     $imgAdd(pos, $file) {
       // 第一步.将图片上传到服务器.
       simpleUploadFile({
-        $vm: this,
+        vm: this.$store,
         $file
       }).then(res => {
         if (res.code !== 300) {

@@ -17,10 +17,12 @@
 // 引入mescroll的vue组件
 import MescrollVue from 'mescroll.js/mescroll.vue'
 import BlogItem from '@/components/BlogItem.vue'
-import { asyncReq } from '@/utils/index.js'
+import { asyncReq, apiKey } from '@/utils/index.js'
+
+const { loadPublishArticlePages } = apiKey
 
 export default {
-  name: 'ArticleListPage',
+  name: 'BlogListPage',
   components: {
     MescrollVue, // 注册mescroll组件
     BlogItem
@@ -55,15 +57,14 @@ export default {
     }
   },
   asyncData(context) {
-    console.warn('context:', context.store)
     // 联网请求
     return asyncReq({
       vm: context.store,
       payload: {
-        apiKey: 'loadPublishArticlePages',
+        apiKey: loadPublishArticlePages,
         params: {
           page: 0,
-          pageSize: 2
+          pageSize: 10
         }
       }
     }).then(({ props, preProp, prop }) => {
@@ -89,9 +90,6 @@ export default {
     next()
   },
   methods: {
-    messageTip() {
-      this.$message.info(`this is message`)
-    },
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit(mescroll) {
       this.mescroll = mescroll // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
@@ -105,7 +103,7 @@ export default {
       asyncReq({
         vm: this.$store,
         payload: {
-          apiKey: 'loadPublishArticlePages',
+          apiKey: loadPublishArticlePages,
           params: {
             page: pageNum,
             pageSize: pageSize

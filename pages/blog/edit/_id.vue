@@ -8,6 +8,9 @@
           placeholder="文章标题"
         />
       </a-form-item>
+      <a-form-item v-bind="formItemLayout">
+        <image-item v-decorator="['avatar', avatarConfig]" img-mount="3" />
+      </a-form-item>
       <a-form-item v-bind="formItemLayout" class="editorArea">
         <editor v-decorator="['content', editorConfig]" />
       </a-form-item>
@@ -23,9 +26,12 @@
 
 <script>
 import Editor from '@/components/Editor.vue'
+import ImageItem from '@/components/ImageItem.vue'
+
 export default {
   components: {
-    Editor
+    Editor,
+    ImageItem
   },
   data() {
     return {
@@ -48,6 +54,14 @@ export default {
           }
         ]
       },
+      ImageItem: {
+        rules: [
+          {
+            required: true,
+            message: `请上传博客封面图片`
+          }
+        ]
+      },
       editorConfig: {
         initialValue: {
           mdContent: '',
@@ -61,6 +75,23 @@ export default {
               if (value.mdContent === '') {
                 // eslint-disable-next-line
                 callback(`请填写内容`)
+                return
+              }
+              callback()
+            }
+          }
+        ]
+      },
+      avatarConfig: {
+        initialValue: '',
+        rules: [
+          {
+            type: `string`,
+            required: true,
+            validator: (rule, value, callback) => {
+              if (value.length === 0) {
+                // eslint-disable-next-line
+                callback(`请上传图片`)
                 return
               }
               callback()

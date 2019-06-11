@@ -27,12 +27,15 @@ const asyncReq = ({ vm, payload }) => {
 }
 
 // bos文件上传
-const simpleUploadFile = async ({ $vm, $file }) => {
-  let data = $vm.$store.state[getBdBosToken]
-  if (!$vm.$store.state[getBdBosToken].sessionToken) {
+const simpleUploadFile = async ({ vm, $file }) => {
+  let data = vm.state[getBdBosToken]
+  if (!vm.state[getBdBosToken].sessionToken) {
     // token 不存在 重新获取
     const { prop } = await asyncReq({
-      apiKey: getBdBosToken
+      vm: vm,
+      payload: {
+        apiKey: getBdBosToken
+      }
     })
     data = prop
   }
