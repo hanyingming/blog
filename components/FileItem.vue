@@ -8,15 +8,16 @@
       :remove="handleRemoveImg"
       @preview="handlePreview"
     >
-      <div v-if="fileList.length < imgMount">
+      <div v-if="fileList.length < maxMount">
         <a-icon type="plus" />
         <div class="ant-upload-text">Upload</div>
       </div>
     </a-upload>
     <a-modal
-      style="position: relative; z-index: 999999999"
       :visible="previewVisible"
       :footer="null"
+      width="auto"
+      style="maxWidth: 750px"
       @cancel="handleCancel"
     >
       <img alt="图片预览" style="width: 100%" :src="previewImage" />
@@ -28,14 +29,13 @@ import { simpleUploadFile } from '@/utils/utils.js'
 
 export default {
   props: {
-    imgMount: {
+    maxMount: {
       // 上传图片数量
       type: String,
       required: true
     }
   },
   data() {
-    console.warn('imgMoutn:', this.imgMount)
     return {
       previewVisible: false,
       previewImage: '',
@@ -74,9 +74,23 @@ export default {
       this.previewVisible = false
     },
     handlePreview(file) {
-      // 处理预览图片操作
-      this.previewImage = file.url || file.thumbUrl
-      this.previewVisible = true
+      // 处理预览图片/文件操作
+      const fileUrl =
+        (file.originFileObj &&
+          file.originFileObj.response &&
+          file.originFileObj.response.url) ||
+        ''
+      if (fileUrl && fileUrl.trim().startsWith('//')) {
+        // 文件网址有效
+        if (file.type.trim().startsWith('image')) {
+          // 图片文件 使用base64位编码 快速预览
+          this.previewImage = file.url || file.thumbUrl
+          this.previewVisible = true
+        } else {
+          window.open(fileUrl, '_target')
+        }
+      } else {
+      }
     }
   }
 }

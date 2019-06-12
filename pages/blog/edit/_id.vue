@@ -9,7 +9,7 @@
         />
       </a-form-item>
       <a-form-item v-bind="formItemLayout">
-        <image-item v-decorator="['avatar', avatarConfig]" img-mount="3" />
+        <file-item v-decorator="['avatar', avatarConfig]" max-mount="3" />
       </a-form-item>
       <a-form-item v-bind="formItemLayout" class="editorArea">
         <editor v-decorator="['content', editorConfig]" />
@@ -25,13 +25,16 @@
 </template>
 
 <script>
+import { asyncReq, apiKey } from '@/utils/index.js'
 import Editor from '@/components/Editor.vue'
-import ImageItem from '@/components/ImageItem.vue'
+import FileItem from '@/components/FileItem.vue'
+
+const { getBdBosToken } = apiKey
 
 export default {
   components: {
     Editor,
-    ImageItem
+    FileItem
   },
   data() {
     return {
@@ -51,14 +54,6 @@ export default {
           {
             required: true,
             message: `请填写标题`
-          }
-        ]
-      },
-      ImageItem: {
-        rules: [
-          {
-            required: true,
-            message: `请上传博客封面图片`
           }
         ]
       },
@@ -83,10 +78,10 @@ export default {
         ]
       },
       avatarConfig: {
-        initialValue: '',
+        initialValue: [],
         rules: [
           {
-            type: `string`,
+            type: `array`,
             required: true,
             validator: (rule, value, callback) => {
               if (value.length === 0) {
@@ -113,6 +108,16 @@ export default {
   },
   beforeCreate() {
     this.form = this.$form.createForm(this)
+  },
+  mounted() {
+    if (!this.$store.state[getBdBosToken].sessionToken) {
+      asyncReq({
+        vm: this.$store,
+        payload: {
+          apiKey: getBdBosToken
+        }
+      })
+    }
   },
   methods: {
     handleSubmit(e) {

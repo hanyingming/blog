@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import { asyncReq, apiKey, simpleUploadFile } from '@/utils/index.js'
-const { getBdBosToken } = apiKey
+import { simpleUploadFile } from '@/utils/index.js'
 
 export default {
   props: {
@@ -63,23 +62,8 @@ export default {
       }
     }
   },
-  mounted() {
-    if (!this.$store.state[getBdBosToken].sessionToken) {
-      asyncReq({
-        vm: this.$store,
-        payload: {
-          apiKey: getBdBosToken
-        }
-      }).then(({ props, preProp, prop }) => {
-        console.warn('preProp:', preProp)
-        console.warn('props,:', props)
-        console.warn('prop,:', prop)
-      })
-    }
-  },
   methods: {
     $change(value, render) {
-      console.warn('render:', render)
       this.$emit('change', {
         mdContent: value,
         htmlContent: render
@@ -109,5 +93,6 @@ export default {
 
 .mavonEditor .markdown-body {
   height: 100%;
+  z-index: 200;
 }
 </style>
