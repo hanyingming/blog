@@ -1,11 +1,12 @@
 <template>
   <div class="clearfix">
     <a-upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      name="file"
       list-type="picture-card"
-      :file-list="fileList"
+      :before-upload="beforeUpload"
+      :show-upload-list="true"
+      :remove="handleRemoveImg"
       @preview="handlePreview"
-      @change="handleChange"
     >
       <div v-if="fileList.length < imgMount">
         <a-icon type="plus" />
@@ -23,6 +24,8 @@
   </div>
 </template>
 <script>
+import { simpleUploadFile } from '@/utils/utils.js'
+
 export default {
   props: {
     imgMount: {
@@ -40,16 +43,40 @@ export default {
     }
   },
   methods: {
+    beforeUpload(file) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        simpleUploadFile({
+          vm: this.$store,
+          $file: file
+        }).then(res => {
+          file.percent = 100
+          file.status = 'done'
+          file.response = {
+            status: 'done',
+            url: res.fileUrl
+          }
+          this.fileList = this.fileList.concat(file)
+          this.$emit('change', this.fileList)
+        })
+      }
+      return false // 阻止 upload 的默认提交事件
+    },
+    handleRemoveImg(file) {
+      // 处理删除操作
+      this.fileList = this.fileList.filter(item => item.uid !== file.uid)
+      this.$emit('change', this.fileList)
+      return true
+    },
     handleCancel() {
+      // 处理关闭预览模态框操作
       this.previewVisible = false
     },
     handlePreview(file) {
+      // 处理预览图片操作
       this.previewImage = file.url || file.thumbUrl
       this.previewVisible = true
-    },
-    handleChange({ fileList }) {
-      this.fileList = fileList
-      this.$emit('change', fileList)
     }
   }
 }
