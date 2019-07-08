@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'/article/detail/' + blogItem.id">
+  <nuxt-link :to="'/blog/detail/' + blogItem.id">
     <div class="itmeBlog">
       <div v-if="blogItem.avatar" class="avatarArea">
         <img :src="blogItem.avatar" alt="" />

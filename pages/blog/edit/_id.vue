@@ -14,7 +14,12 @@
       <a-form-item v-bind="formItemLayout" class="editorArea">
         <editor v-decorator="['content', editorConfig]" />
       </a-form-item>
-      <a-button type="primary" html-type="submit" class="login-form-button">
+      <a-button
+        :loading="submitLoading"
+        type="primary"
+        html-type="submit"
+        class="login-form-button"
+      >
         提交
       </a-button>
     </a-form>
@@ -29,7 +34,7 @@ import { asyncReq, apiKey } from '@/utils/index.js'
 import Editor from '@/components/Editor.vue'
 import FileItem from '@/components/FileItem.vue'
 
-const { getBdBosToken } = apiKey
+const { getBdBosToken, loadBlogPost } = apiKey
 
 export default {
   components: {
@@ -93,7 +98,8 @@ export default {
             }
           }
         ]
-      }
+      },
+      submitLoading: false // 防止重复提交表单
     }
   },
   fetch(context) {
@@ -122,9 +128,29 @@ export default {
   methods: {
     handleSubmit(e) {
       e && e.preventDefault()
+      this.submitLoading = true
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values)
+          asyncReq({
+            vm: this.$store,
+            payload: {
+              apiKey: loadBlogPost,
+              params: {
+                title: values.title,
+                avatar: values.avatar
+                  .filter(item => item.response.status === 'done')
+                  .map(item => item.response.url)
+                  .join(','),
+                mdContent: values.content.mdContent,
+                htmlContent: values.content.htmlContent
+              }
+            }
+          }).then(() => {
+            this.submitLoading = false
+          })
+        } else {
+          this.submitLoading = false
         }
       })
     }

@@ -9,7 +9,9 @@ const storageKey = {
 const apiKey = {
   loadArticleList: 'loadArticleList',
   loadPublishArticlePages: 'loadPublishArticlePages',
-  getBdBosToken: 'getBdBosToken'
+  getBdBosToken: 'getBdBosToken', // 获取百度上传图片token
+  loadBlogPost: 'loadBlogPost', // 上传内容
+  loadBlogById: 'loadBlogById' // 获取详情
 }
 
 export { storageKey, apiKey }

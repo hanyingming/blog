@@ -76,12 +76,19 @@ const store = () =>
             }
           })
         const serviceObj = api[payload.apiKey]
+        // 请求参数
+        const params = payload.params || serviceObj.params || ''
+        const method = payload.method || serviceObj.method || 'GET'
+        const paramsKey =
+          method.toLocaleLowerCase() === 'get' ? 'params' : 'data'
         // 处理异步请求为同步
         const data = await apiReq({
           url: serviceObj.url,
-          method: payload.method || serviceObj.method || 'GET',
+          method,
           headers: payload.headers || serviceObj.headers || '',
-          params: payload.params || serviceObj.params || ''
+          [paramsKey]: serviceObj.preHandleData
+            ? serviceObj.preHandleData(params)
+            : params // 数据预处理
         })
         console.warn('data:', data)
         if (!data) {

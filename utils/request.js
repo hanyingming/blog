@@ -81,6 +81,7 @@ function getUriParam(keys, object) {
 }
 
 // 解析字符串
+/* eslint-disable-next-line */
 function toQueryString(object) {
   const array = []
 
@@ -128,20 +129,22 @@ export function apiReq(options) {
   }
   const opts = Object.assign({}, defaultOptions, { ...options })
   // add query params to url when method is GET
-  if (
-    opts &&
-    opts.method &&
-    opts.method.toLocaleLowerCase === 'get' &&
-    opts.params
-  ) {
-    mergeUrl = mergeUrl + '?' + toQueryString(opts.params)
-  }
+  // if (
+  //   opts &&
+  //   opts.method &&
+  //   opts.method.toLocaleLowerCase === 'get' &&
+  //   opts.params
+  // ) {
+  //   mergeUrl = mergeUrl + '?' + toQueryString(opts.params)
+  // }
   opts.url = mergeUrl
-  opts.header = {
+  opts.headers = {
     ...opts.headers,
     // 'x-auth-token': localStorage.getItem(storageKey.token) || '',
     p: '8'
   }
+
+  // console.warn('opts: ', opts)
 
   // return new Promise((resolve, reject) =>
   //   axios({

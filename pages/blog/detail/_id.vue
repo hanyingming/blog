@@ -1,16 +1,21 @@
 <template>
   <div class="blogDetail">
-    <h1 class="title">文章标题</h1>
-    <p class="summary">文章摘要</p>
+    <h1 class="title">{{ blogData.title }}</h1>
+    <p class="summary">{{ blogData.summary }}</p>
     <div class="content">
       <pre>
-        {{ content }}
+        {{ blogData.htmlContent }}
       </pre>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { asyncReq, apiKey } from '@/utils/index.js'
+
+const { loadBlogById } = apiKey
+
 export default {
   name: 'BlogDetailPage',
   data() {
@@ -18,9 +23,20 @@ export default {
       content: ' 文章详情 content <div style="font-size: 28px;">你好</div>'
     }
   },
-  asyncData(context) {
-    console.warn('params', context.params.id)
-    return { project: 'nuxt' }
+  computed: mapState({
+    blogData: state => state[loadBlogById]
+  }),
+  async fetch(context) {
+    // 获取详情
+    await asyncReq({
+      vm: context.store,
+      payload: {
+        apiKey: loadBlogById,
+        params: {
+          id: context.route.params.id
+        }
+      }
+    })
   }
 }
 </script>
