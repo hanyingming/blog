@@ -5,10 +5,10 @@ import api from '../service/index.js'
 import { checkIsStartWithLoad, apiReq } from '@/utils/index.js'
 
 Vue.use(Vuex)
-
-console.warn(states, 'states')
-console.warn(api, 'api')
-console.warn(Vuex, 'Vuex:')
+//
+// console.warn(states, 'states')
+// console.warn(api, 'api')
+// console.warn(Vuex, 'Vuex:')
 
 const store = () =>
   new Vuex.Store({
@@ -24,7 +24,7 @@ const store = () =>
       // 不会存在数据污染问题
       async asyncReqData({ state, commit }, { payload }) {
         const checkResVal = {
-          props: '',
+          props: state,
           preProp: '',
           prop: ''
         }
@@ -66,7 +66,7 @@ const store = () =>
         const isLoadStart = checkIsStartWithLoad(
           payload.stateKey || payload.apiKey
         )
-        console.warn('isLoadStart:', isLoadStart)
+        // console.warn('isLoadStart:', isLoadStart)
         isLoadStart &&
           commit('saveOrUpdate', {
             key: payload.stateKey || payload.apiKey,
@@ -90,7 +90,7 @@ const store = () =>
             ? serviceObj.preHandleData(params)
             : params // 数据预处理
         })
-        console.warn('data:', data)
+        // console.warn('data:', data)
         if (!data) {
           // 请求数据异常
           isLoadStart &&
@@ -107,7 +107,7 @@ const store = () =>
             prop: ''
           }
         }
-        console.warn('data-:', data)
+        // console.warn('data-:', data)
         // 处理数据
         const handleData =
           (serviceObj.handler &&
@@ -139,7 +139,7 @@ const store = () =>
               key: payload.stateKey || payload.apiKey,
               value: handleData
             })
-        console.warn('resData', resData)
+        // console.warn('resData', resData)
         // 返回后台返回的数据
         return resData
       }

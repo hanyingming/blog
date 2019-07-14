@@ -44,6 +44,7 @@ module.exports = {
    */
   plugins: [
     '@/plugins/antd-ui',
+    { src: '@/plugins/vue-swiper', ssr: true },
     { src: '@/plugins/vue-mavon-editor', srr: false }
   ],
 

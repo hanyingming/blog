@@ -11,7 +11,8 @@ const apiKey = {
   loadPublishArticlePages: 'loadPublishArticlePages',
   getBdBosToken: 'getBdBosToken', // 获取百度上传图片token
   loadBlogPost: 'loadBlogPost', // 上传内容
-  loadBlogById: 'loadBlogById' // 获取详情
+  loadBlogById: 'loadBlogById', // 获取详情
+  loadBlogBanners: 'loadBlogBannersArr' // 加载首页banners
 }
 
 export { storageKey, apiKey }

@@ -8,7 +8,8 @@ const {
   loadPublishArticlePages,
   getBdBosToken,
   loadBlogPost,
-  loadBlogById
+  loadBlogById,
+  loadBlogBanners
 } = apiKey
 
 console.warn('apiKey: ', apiKey)
@@ -57,6 +58,10 @@ export default {
   },
   [loadBlogById]: {
     url: 'blog/getBlogById',
+    handler: ({ resData }) => resData
+  },
+  [loadBlogBanners]: {
+    url: 'imgBanner/getImgBannersByType',
     handler: ({ resData }) => resData
   }
 }

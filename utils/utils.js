@@ -18,6 +18,20 @@ const checkIsStartWithLoad = str => {
   return false
 }
 
+// 校验字符串末尾处是否包含数据类型，并返回数据类型的默认数据
+const checkoutIsEndWithDataType = str => {
+  if (!str) return {}
+  if (typeof str === 'string') {
+    str = str.toLocaleLowerCase()
+    if (str.endsWith('obj') || str.endsWith('object')) return {}
+    if (str.endsWith('arr') || str.endsWith('array')) return []
+    if (str.endsWith('int') || str.endsWith('integer')) return 0
+    if (str.endsWith('str') || str.endsWith('string')) return ''
+    if (str.endsWith('bol') || str.endsWith('boolean')) return ''
+  }
+  return {}
+}
+
 // 发起异步请求
 const asyncReq = ({ vm, payload }) => {
   return vm.dispatch({
@@ -77,4 +91,9 @@ const simpleUploadFile = async ({ vm, $file }) => {
     })
 }
 
-export { checkIsStartWithLoad, asyncReq, simpleUploadFile }
+export {
+  checkIsStartWithLoad,
+  checkoutIsEndWithDataType,
+  asyncReq,
+  simpleUploadFile
+}

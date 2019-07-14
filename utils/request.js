@@ -100,10 +100,11 @@ function toQueryString(object) {
 // 解析返回的数据
 function jsonParse(res) {
   // console.warn('jsonParse:', res)
-  const data = (res && res.data) || {}
-  if (data && data.code === 200) {
-    return data.data
-  }
+  const data = (res && res.data) || ''
+  // if (data && data.code === 200) {
+  //   return data.data
+  // }
+  return data
   // 自定义异常提示或者处理
   // data.message
 }

@@ -72,7 +72,7 @@ export default {
       console.warn('props,:', props)
       console.warn('prop,:', prop)
       return {
-        dataList: (prop && prop.list) || [] // 列表数据
+        dataList: (prop && prop.data && prop.data.list) || [] // 列表数据
       }
     })
   },
@@ -114,7 +114,7 @@ export default {
         console.warn('props,:', props)
         console.warn('prop,:', prop)
         if (prop) {
-          const curPageData = prop.list || []
+          const curPageData = (prop.data && prop.data.list) || []
           const hasNext = prop.hasNextPage || false
 
           // 如果是第一页需手动置空列表
