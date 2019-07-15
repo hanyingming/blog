@@ -6,14 +6,33 @@
       </div>
       <div class="right">
         <ul class="items">
-          <li class="item active">首页</li>
+          <nuxt-link :to="'/pc/'">
+            <li class="item active">首页</li>
+          </nuxt-link>
           <li class="item">关于</li>
-          <li class="item">写博客</li>
+          <nuxt-link :to="'/pc/edit/add'">
+            <li class="item">写博客</li>
+          </nuxt-link>
         </ul>
       </div>
     </div>
   </header>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      path: this.routePath()
+    }
+  },
+  methods: {
+    routePath() {
+      return this.$route.path
+    }
+  }
+}
+</script>
 
 <style scoped>
 header {

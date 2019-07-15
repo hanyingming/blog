@@ -1,25 +1,23 @@
 <template>
-  <base-frame class="container">
+  <div>
     <section class="banners">
       <banner-list :banners="blogBanners"></banner-list>
     </section>
     <section class="blogItems">
       <blog-items :blog-items="blogItems" />
     </section>
-  </base-frame>
+  </div>
 </template>
+
 <script>
-// import { mapState } from 'vuex'
-import BaseFrame from '@/components/BaseFrame'
 import BannerList from '@/components/BannerList'
 import BlogItems from '@/components/BlogItems.vue'
-import { asyncReq, apiKey } from '../utils'
+import { asyncReq, apiKey } from '../../utils/index'
 
 const { loadBlogBanners, loadPublishArticlePages } = apiKey
 
 export default {
   components: {
-    BaseFrame,
     BannerList,
     BlogItems
   },
@@ -108,19 +106,4 @@ export default {
   }
 }
 </script>
-<style scoped>
-.container {
-  font-size: 16px;
-}
-.banners {
-  /*position: relative;*/
-  /*overflow: hidden;*/
-  /*display: flex;*/
-  /*height: 300px;*/
-  /*width: 800px;*/
-  /*max-height: 600px;*/
-  /*max-width: 1200px;*/
-}
-.blogItems {
-}
-</style>
+<style scoped></style>

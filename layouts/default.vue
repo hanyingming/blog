@@ -1,8 +1,28 @@
 <template>
-  <div>
+  <base-frame v-if="getTerminalType() === '/pc'" class="container">
+    <nuxt />
+  </base-frame>
+  <div v-else>
     <nuxt />
   </div>
 </template>
+
+<script>
+import BaseFrame from '@/components/BaseFrame'
+import { getTerminalType } from '@/utils'
+
+export default {
+  components: {
+    BaseFrame
+  },
+  methods: {
+    getTerminalType() {
+      console.warn(getTerminalType(this.$route.path))
+      return getTerminalType(this.$route.path)
+    }
+  }
+}
+</script>
 
 <style>
 html {

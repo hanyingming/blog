@@ -4,7 +4,8 @@ import {
   checkIsStartWithLoad,
   checkoutIsEndWithDataType,
   asyncReq,
-  simpleUploadFile
+  simpleUploadFile,
+  getTerminalType
 } from './utils.js'
 const config = require('./config.js')
 
@@ -17,5 +18,6 @@ export {
   checkIsStartWithLoad,
   checkoutIsEndWithDataType,
   asyncReq,
-  simpleUploadFile
+  simpleUploadFile,
+  getTerminalType
 }

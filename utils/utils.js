@@ -42,8 +42,8 @@ const asyncReq = ({ vm, payload }) => {
 
 // bos文件上传
 const simpleUploadFile = async ({ vm, $file }) => {
-  let data = vm.state[getBdBosToken]
-  if (!vm.state[getBdBosToken].sessionToken) {
+  let data = vm.state[getBdBosToken].data
+  if (!data.sessionToken) {
     // token 不存在 重新获取
     const { prop } = await asyncReq({
       vm: vm,
@@ -91,9 +91,23 @@ const simpleUploadFile = async ({ vm, $file }) => {
     })
 }
 
+// 判断移动端还是pc
+const getTerminalType = path => {
+  // return process.isClient && /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
+  if (!path) return
+  if (path.includes('/pc/')) {
+    return '/pc'
+  } else if (path.includes('/wap/')) {
+    return '/wap'
+  } else {
+    return ''
+  }
+}
+
 export {
   checkIsStartWithLoad,
   checkoutIsEndWithDataType,
   asyncReq,
-  simpleUploadFile
+  simpleUploadFile,
+  getTerminalType
 }

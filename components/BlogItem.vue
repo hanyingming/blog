@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'/blog/detail/' + blogItem.id">
+  <nuxt-link :to="getTerminalType() + '/detail/' + blogItem.id">
     <div class="itmeBlog">
       <div v-if="blogItem.avatar" class="avatarArea">
         <img :src="blogItem.avatar" alt="" />
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { getTerminalType } from '@/utils'
+
 export default {
   props: {
     blogItem: {
@@ -22,6 +24,11 @@ export default {
       default() {
         return {}
       }
+    }
+  },
+  methods: {
+    getTerminalType() {
+      return getTerminalType(this.$route.path)
     }
   }
 }

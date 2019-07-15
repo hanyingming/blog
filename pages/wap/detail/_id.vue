@@ -24,10 +24,9 @@ export default {
     }
   },
   computed: mapState({
-    blogData: state => state[loadBlogById].data
+    blogData: state => state[loadBlogById]
   }),
   async fetch(context) {
-    // 判断是否含有缓存数据
     // 获取详情
     await asyncReq({
       vm: context.store,

@@ -20,7 +20,7 @@
         html-type="submit"
         class="login-form-button"
       >
-        提交
+        发表
       </a-button>
     </a-form>
     <!-- <div class="content">
@@ -146,8 +146,12 @@ export default {
                 htmlContent: values.content.htmlContent
               }
             }
-          }).then(() => {
+          }).then(({ prop }) => {
+            // 提交成功
             this.submitLoading = false
+            this.$router.push({
+              path: `/pc/detail/${prop && prop.data && prop.data.id}`
+            })
           })
         } else {
           this.submitLoading = false
